@@ -24,8 +24,6 @@ function App() {
 
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([
     // Ressources Humaines
-    { id: 'rh-header', category: 'RESSOURCES HUMAINES', budget: 0, paye: 0, resteAFaire: 0, type: 'header' },
-    { id: 'rh-header', category: 'RESSOURCES HUMAINES', budget: 0, debourse: 0, resteAFaire: 0, totalFinal: 0, ecartBudget: 0, type: 'header' },
     { id: 'chef-chantier-h', category: 'CHEF DE CHANTIER (H)', budget: 10, debourse: 5, resteAFaire: 5, totalFinal: 10, ecartBudget: 0, type: 'item' },
     { id: 'chef-chantier-e', category: 'CHEF DE CHANTIER (€)', budget: 1100, debourse: 550, resteAFaire: 0, totalFinal: 550, ecartBudget: 550, type: 'item' },
     { id: 'technicien-h', category: 'TECHNICIEN (H)', budget: 120, debourse: 90, resteAFaire: 40, totalFinal: 130, ecartBudget: -10, type: 'item' },

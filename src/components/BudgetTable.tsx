@@ -154,7 +154,7 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                 </td>
                 <td className="px-6 py-3 text-right">
                   <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''} ${item.ecartBudget < 0 ? 'text-red-600' : item.ecartBudget > 0 ? 'text-green-600' : ''}`}>
-                    {item.id === 'resultat-pourcentage' ? formatPercentage(item.ecartBudget) : formatCurrency(item.ecartBudget)}
+                    {item.id === 'resultat-pourcentage' ? `${item.ecartBudget.toFixed(2)}%` : formatCurrency(item.ecartBudget)}
                   </span>
                 </td>
               </tr>
