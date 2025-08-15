@@ -143,6 +143,8 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                       onChange={(e) => handleInputChange(item.id, 'resteAFaire', e.target.value)}
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
+                  ) : ['encaissement', 'ecart-facturation', 'resultat-final', 'resultat-pourcentage', 'cash-affaire'].includes(item.id) ? (
+                    <span className="text-gray-400">-</span>
                   ) : (
                     <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.id === 'ecart-facturation' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
                       {formatCurrency(item.resteAFaire)}
