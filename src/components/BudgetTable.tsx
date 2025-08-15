@@ -121,7 +121,7 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
                   ) : (
-                    <span className={item.type === 'total' ? 'font-bold' : ''}>
+                    <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.id === 'ecart-facturation' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
                       {formatCurrency(item.debourse)}
                     </span>
                   )}
@@ -142,18 +142,18 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
                   ) : (
-                    <span className={item.type === 'total' ? 'font-bold' : ''}>
+                    <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.id === 'ecart-facturation' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
                       {formatCurrency(item.resteAFaire)}
                     </span>
                   )}
                 </td>
                 <td className="px-6 py-3 text-right">
-                  <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
+                  <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' || item.id === 'ecart-facturation' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
                     {item.id === 'resultat-pourcentage' ? formatPercentage(item.totalFinal) : formatCurrency(item.totalFinal)}
                   </span>
                 </td>
                 <td className="px-6 py-3 text-right">
-                  <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''} ${item.ecartBudget < 0 ? 'text-red-600' : item.ecartBudget > 0 ? 'text-green-600' : ''}`}>
+                  <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' || item.id === 'ecart-facturation' ? 'bg-gray-100 px-2 py-1 rounded' : ''} ${item.ecartBudget < 0 ? 'text-red-600' : item.ecartBudget > 0 ? 'text-green-600' : ''}`}>
                     {item.id === 'resultat-pourcentage' ? `${item.ecartBudget.toFixed(2)}%` : formatCurrency(item.ecartBudget)}
                   </span>
                 </td>
