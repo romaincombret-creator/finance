@@ -4,15 +4,17 @@ export interface BudgetItem {
   id: string;
   category: string;
   budget: number;
-  paye: number;
+  debourse: number;
   resteAFaire: number;
+  totalFinal: number;
+  ecartBudget: number;
   type: 'header' | 'item' | 'subtotal' | 'total';
   color?: 'green' | 'yellow' | 'orange';
 }
 
 interface BudgetTableProps {
   items: BudgetItem[];
-  onItemChange: (id: string, field: 'budget' | 'paye' | 'resteAFaire', value: number) => void;
+  onItemChange: (id: string, field: 'budget' | 'debourse' | 'resteAFaire' | 'totalFinal' | 'ecartBudget', value: number) => void;
 }
 
 export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange }) => {
@@ -53,7 +55,7 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
     return `${baseClass} hover:bg-gray-50`;
   };
 
-  const handleInputChange = (id: string, field: 'budget' | 'paye' | 'resteAFaire', value: string) => {
+  const handleInputChange = (id: string, field: 'budget' | 'debourse' | 'resteAFaire' | 'totalFinal' | 'ecartBudget', value: string) => {
     const numericValue = parseFloat(value) || 0;
     onItemChange(id, field, numericValue);
   };
@@ -66,8 +68,10 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
             <tr>
               <th className="px-6 py-4 text-left font-semibold">Catégorie</th>
               <th className="px-6 py-4 text-right font-semibold">Budget</th>
-              <th className="px-6 py-4 text-right font-semibold">Payé</th>
+              <th className="px-6 py-4 text-right font-semibold">Déboursé</th>
               <th className="px-6 py-4 text-right font-semibold">Reste à faire</th>
+              <th className="px-6 py-4 text-right font-semibold">Total final</th>
+              <th className="px-6 py-4 text-right font-semibold">Écart budget</th>
             </tr>
           </thead>
           <tbody>
@@ -94,13 +98,13 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                   {item.type === 'item' ? (
                     <input
                       type="number"
-                      value={item.paye}
-                      onChange={(e) => handleInputChange(item.id, 'paye', e.target.value)}
+                      value={item.debourse}
+                      onChange={(e) => handleInputChange(item.id, 'debourse', e.target.value)}
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
-                      {formatCurrency(item.paye)}
+                      {formatCurrency(item.debourse)}
                     </span>
                   )}
                 </td>
@@ -115,6 +119,34 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
                       {formatCurrency(item.resteAFaire)}
+                    </span>
+                  )}
+                </td>
+                <td className="px-6 py-3 text-right">
+                  {item.type === 'item' ? (
+                    <input
+                      type="number"
+                      value={item.totalFinal}
+                      onChange={(e) => handleInputChange(item.id, 'totalFinal', e.target.value)}
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <span className={item.type === 'total' ? 'font-bold' : ''}>
+                      {formatCurrency(item.totalFinal)}
+                    </span>
+                  )}
+                </td>
+                <td className="px-6 py-3 text-right">
+                  {item.type === 'item' ? (
+                    <input
+                      type="number"
+                      value={item.ecartBudget}
+                      onChange={(e) => handleInputChange(item.id, 'ecartBudget', e.target.value)}
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <span className={item.type === 'total' ? 'font-bold' : ''}>
+                      {formatCurrency(item.ecartBudget)}
                     </span>
                   )}
                 </td>
