@@ -208,6 +208,25 @@ function App() {
           };
         }
         
+        // Écart facturation = Total facturation - Prix de vente
+        if (item.id === 'ecart-facturation') {
+          const totalFacturation = finalItems.find(i => i.id === 'total-facturation');
+          
+          const ecartBudget = (totalFacturation?.budget || 0) - project.prixVente;
+          const ecartDebourse = (totalFacturation?.debourse || 0) - project.prixVente;
+          const ecartResteAFaire = (totalFacturation?.resteAFaire || 0) - project.prixVente;
+          const ecartTotalFinal = (totalFacturation?.totalFinal || 0) - project.prixVente;
+          
+          return {
+            ...item,
+            budget: ecartBudget,
+            debourse: ecartDebourse,
+            resteAFaire: ecartResteAFaire,
+            totalFinal: ecartTotalFinal,
+            ecartBudget: ecartBudget - ecartTotalFinal
+          };
+        }
+        
         return item;
       });
     });
