@@ -46,7 +46,7 @@ function App() {
     { id: 'resultat-final', category: 'Résultat final estimé', budget: 800, debourse: 5950, resteAFaire: 0, totalFinal: 450, ecartBudget: 350, type: 'total' },
     { id: 'resultat-pourcentage', category: '% Résultat final estimé', budget: 4.0, debourse: 29.8, resteAFaire: 0, totalFinal: 2.3, ecartBudget: 0.02, type: 'total' },
     { id: 'ecart-facturation', category: 'Écart facturation', budget: 0, debourse: -8000, resteAFaire: 0, totalFinal: 0, ecartBudget: 0, type: 'item' },
-    { id: 'cash-affaire', category: 'Cash de l\'affaire', budget: 0, debourse: -4050, resteAFaire: 0, totalFinal: 0, ecartBudget: 0, type: 'total' }
+    { id: 'cash-chantier', category: 'Cash du chantier', budget: 0, debourse: -4050, resteAFaire: 0, totalFinal: 0, ecartBudget: 0, type: 'total' }
   ]);
 
   // Calcul automatique des totaux
@@ -224,6 +224,26 @@ function App() {
             resteAFaire: ecartResteAFaire,
             totalFinal: ecartTotalFinal,
             ecartBudget: ecartBudget - ecartTotalFinal
+          };
+        }
+        
+        // Cash du chantier = Encaissement - Total dépenses
+        if (item.id === 'cash-chantier') {
+          const encaissement = finalItems.find(i => i.id === 'encaissement');
+          const totalDepenses = finalItems.find(i => i.id === 'total-depenses');
+          
+          const cashBudget = (encaissement?.budget || 0) - (totalDepenses?.budget || 0);
+          const cashDebourse = (encaissement?.debourse || 0) - (totalDepenses?.debourse || 0);
+          const cashResteAFaire = (encaissement?.resteAFaire || 0) - (totalDepenses?.resteAFaire || 0);
+          const cashTotalFinal = (encaissement?.totalFinal || 0) - (totalDepenses?.totalFinal || 0);
+          
+          return {
+            ...item,
+            budget: cashBudget,
+            debourse: cashDebourse,
+            resteAFaire: cashResteAFaire,
+            totalFinal: cashTotalFinal,
+            ecartBudget: cashBudget - cashTotalFinal
           };
         }
         
