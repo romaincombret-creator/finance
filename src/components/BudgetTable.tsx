@@ -25,6 +25,10 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
     }).format(value);
   };
 
+  const formatPercentage = (value: number) => {
+    return `${value.toFixed(1)}%`;
+  };
+
   const getRowClassName = (item: BudgetItem) => {
     let baseClass = "border-b border-gray-200";
     
@@ -145,12 +149,12 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                 </td>
                 <td className="px-6 py-3 text-right">
                   <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
-                    {formatCurrency(item.totalFinal)}
+                    {item.id === 'resultat-pourcentage' ? formatPercentage(item.totalFinal) : formatCurrency(item.totalFinal)}
                   </span>
                 </td>
                 <td className="px-6 py-3 text-right">
                   <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''} ${item.ecartBudget < 0 ? 'text-red-600' : item.ecartBudget > 0 ? 'text-green-600' : ''}`}>
-                    {formatCurrency(item.ecartBudget)}
+                    {item.id === 'resultat-pourcentage' ? formatPercentage(item.ecartBudget) : formatCurrency(item.ecartBudget)}
                   </span>
                 </td>
               </tr>

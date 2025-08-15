@@ -172,7 +172,46 @@ function App() {
         });
       };
 
-      return calculateTotals(updatedItems);
+      const finalItems = calculateTotals(updatedItems);
+      
+      // Calcul du résultat final estimé et du pourcentage
+      return finalItems.map(item => {
+        // Résultat final estimé = Prix de vente - Total dépenses
+        if (item.id === 'resultat-final') {
+          const totalDepenses = finalItems.find(i => i.id === 'total-depenses');
+          const resultatFinal = project.prixVente - (totalDepenses?.totalFinal || 0);
+          
+          return {
+            ...item,
+            budget: project.prixVente - (totalDepenses?.budget || 0),
+            debourse: project.prixVente - (totalDepenses?.debourse || 0),
+            resteAFaire: 0,
+            totalFinal: resultatFinal,
+            ecartBudget: item.budget - resultatFinal
+          };
+        }
+        
+        // % Résultat final estimé = (Résultat final / Prix de vente) * 100
+        if (item.id === 'resultat-pourcentage') {
+          const resultatFinal = finalItems.find(i => i.id === 'resultat-final');
+          const totalDepenses = finalItems.find(i => i.id === 'total-depenses');
+          
+          const pourcentageBudget = project.prixVente > 0 ? ((project.prixVente - (totalDepenses?.budget || 0)) / project.prixVente) * 100 : 0;
+          const pourcentageDebourse = project.prixVente > 0 ? ((project.prixVente - (totalDepenses?.debourse || 0)) / project.prixVente) * 100 : 0;
+          const pourcentageFinal = project.prixVente > 0 ? ((resultatFinal?.totalFinal || 0) / project.prixVente) * 100 : 0;
+          
+          return {
+            ...item,
+            budget: pourcentageBudget,
+            debourse: pourcentageDebourse,
+            resteAFaire: 0,
+            totalFinal: pourcentageFinal,
+            ecartBudget: pourcentageBudget - pourcentageFinal
+          };
+        }
+        
+        return item;
+      });
     });
   };
 
