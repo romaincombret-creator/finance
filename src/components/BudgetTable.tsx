@@ -100,7 +100,7 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                       type="number"
                       value={item.debourse}
                       onChange={(e) => handleInputChange(item.id, 'debourse', e.target.value)}
-                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                     />
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
@@ -114,7 +114,7 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                       type="number"
                       value={item.resteAFaire}
                       onChange={(e) => handleInputChange(item.id, 'resteAFaire', e.target.value)}
-                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                     />
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
@@ -123,32 +123,14 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                   )}
                 </td>
                 <td className="px-6 py-3 text-right">
-                  {item.type === 'item' ? (
-                    <input
-                      type="number"
-                      value={item.totalFinal}
-                      onChange={(e) => handleInputChange(item.id, 'totalFinal', e.target.value)}
-                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <span className={item.type === 'total' ? 'font-bold' : ''}>
-                      {formatCurrency(item.totalFinal)}
-                    </span>
-                  )}
+                  <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
+                    {formatCurrency(item.totalFinal)}
+                  </span>
                 </td>
                 <td className="px-6 py-3 text-right">
-                  {item.type === 'item' ? (
-                    <input
-                      type="number"
-                      value={item.ecartBudget}
-                      onChange={(e) => handleInputChange(item.id, 'ecartBudget', e.target.value)}
-                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <span className={item.type === 'total' ? 'font-bold' : ''}>
-                      {formatCurrency(item.ecartBudget)}
-                    </span>
-                  )}
+                  <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.type === 'item' ? 'bg-gray-100 px-2 py-1 rounded' : ''} ${item.ecartBudget < 0 ? 'text-red-600' : item.ecartBudget > 0 ? 'text-green-600' : ''}`}>
+                    {formatCurrency(item.ecartBudget)}
+                  </span>
                 </td>
               </tr>
             ))}

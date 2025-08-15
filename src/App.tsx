@@ -85,9 +85,29 @@ function App() {
 
   const handleItemChange = (id: string, field: 'budget' | 'debourse' | 'resteAFaire' | 'totalFinal' | 'ecartBudget', value: number) => {
     setBudgetItems(prevItems => {
-      const updatedItems = prevItems.map(item => 
-        item.id === id ? { ...item, [field]: value } : item
-      );
+      const updatedItems = prevItems.map(item => {
+        if (item.id === id) {
+          const updatedItem = { ...item, [field]: value };
+          
+          // Calcul automatique du total final (déboursé + reste à faire)
+          if (field === 'debourse' || field === 'resteAFaire') {
+            const debourse = field === 'debourse' ? value : updatedItem.debourse;
+            const resteAFaire = field === 'resteAFaire' ? value : updatedItem.resteAFaire;
+            updatedItem.totalFinal = debourse + resteAFaire;
+            
+            // Calcul automatique de l'écart budget (budget - total final)
+            updatedItem.ecartBudget = updatedItem.budget - updatedItem.totalFinal;
+          }
+          
+          // Si on modifie le budget, recalculer l'écart
+          if (field === 'budget') {
+            updatedItem.ecartBudget = value - updatedItem.totalFinal;
+          }
+          
+          return updatedItem;
+        }
+        return item;
+      });
 
       return updatedItems;
     });
