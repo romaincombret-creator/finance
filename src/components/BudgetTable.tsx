@@ -100,7 +100,7 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
                   ) : (
-                    <span className={item.type === 'total' ? 'font-bold' : ''}>
+                    <span className={`${item.type === 'total' ? 'font-bold' : ''} ${item.id === 'ecart-facturation' ? 'bg-gray-100 px-2 py-1 rounded' : ''}`}>
                       {formatCurrency(item.budget)}
                     </span>
                   )}
