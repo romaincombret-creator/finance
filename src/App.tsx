@@ -109,7 +109,70 @@ function App() {
         return item;
       });
 
-      return updatedItems;
+      // Calculs automatiques des totaux
+      const calculateTotals = (items) => {
+        return items.map(item => {
+          // Total heures (€) = Chef de chantier (€) + Technicien (€)
+          if (item.id === 'total-heures-e') {
+            const chefChantier = items.find(i => i.id === 'chef-chantier-e');
+            const technicien = items.find(i => i.id === 'technicien-e');
+            
+            const budget = (chefChantier?.budget || 0) + (technicien?.budget || 0);
+            const debourse = (chefChantier?.debourse || 0) + (technicien?.debourse || 0);
+            const resteAFaire = (chefChantier?.resteAFaire || 0) + (technicien?.resteAFaire || 0);
+            const totalFinal = debourse + resteAFaire;
+            const ecartBudget = budget - totalFinal;
+            
+            return { ...item, budget, debourse, resteAFaire, totalFinal, ecartBudget };
+          }
+          
+          // Total heures = Chef de chantier (H) + Technicien (H)
+          if (item.id === 'total-heures') {
+            const chefChantierH = items.find(i => i.id === 'chef-chantier-h');
+            const technicienH = items.find(i => i.id === 'technicien-h');
+            
+            const budget = (chefChantierH?.budget || 0) + (technicienH?.budget || 0);
+            const debourse = (chefChantierH?.debourse || 0) + (technicienH?.debourse || 0);
+            const resteAFaire = (chefChantierH?.resteAFaire || 0) + (technicienH?.resteAFaire || 0);
+            const totalFinal = debourse + resteAFaire;
+            const ecartBudget = budget - totalFinal;
+            
+            return { ...item, budget, debourse, resteAFaire, totalFinal, ecartBudget };
+          }
+          
+          // Total dépenses = somme de toutes les lignes spécifiées
+          if (item.id === 'total-depenses') {
+            const lignesAAdditionner = [
+              'total-heures-e', 'notes-frais', 'deplacements', 
+              'fournitures', 'sous-traitance', 'autres-depenses', 'aleas'
+            ];
+            
+            const budget = lignesAAdditionner.reduce((sum, id) => {
+              const ligne = items.find(i => i.id === id);
+              return sum + (ligne?.budget || 0);
+            }, 0);
+            
+            const debourse = lignesAAdditionner.reduce((sum, id) => {
+              const ligne = items.find(i => i.id === id);
+              return sum + (ligne?.debourse || 0);
+            }, 0);
+            
+            const resteAFaire = lignesAAdditionner.reduce((sum, id) => {
+              const ligne = items.find(i => i.id === id);
+              return sum + (ligne?.resteAFaire || 0);
+            }, 0);
+            
+            const totalFinal = debourse + resteAFaire;
+            const ecartBudget = budget - totalFinal;
+            
+            return { ...item, budget, debourse, resteAFaire, totalFinal, ecartBudget };
+          }
+          
+          return item;
+        });
+      };
+
+      return calculateTotals(updatedItems);
     });
   };
 

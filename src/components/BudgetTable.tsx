@@ -81,12 +81,19 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                   {item.category}
                 </td>
                 <td className="px-6 py-3 text-right">
-                  {item.type === 'item' ? (
+                  {item.type === 'item' && item.id !== 'total-facturation' ? (
                     <input
                       type="number"
                       value={item.budget}
                       onChange={(e) => handleInputChange(item.id, 'budget', e.target.value)}
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : item.id === 'total-facturation' ? (
+                    <input
+                      type="number"
+                      value={item.budget}
+                      onChange={(e) => handleInputChange(item.id, 'budget', e.target.value)}
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
@@ -95,12 +102,19 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                   )}
                 </td>
                 <td className="px-6 py-3 text-right">
-                  {item.type === 'item' ? (
+                  {item.type === 'item' && item.id !== 'total-facturation' ? (
                     <input
                       type="number"
                       value={item.debourse}
                       onChange={(e) => handleInputChange(item.id, 'debourse', e.target.value)}
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    />
+                  ) : item.id === 'total-facturation' ? (
+                    <input
+                      type="number"
+                      value={item.debourse}
+                      onChange={(e) => handleInputChange(item.id, 'debourse', e.target.value)}
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
@@ -109,12 +123,19 @@ export const BudgetTable: React.FC<BudgetTableProps> = ({ items, onItemChange })
                   )}
                 </td>
                 <td className="px-6 py-3 text-right">
-                  {item.type === 'item' ? (
+                  {item.type === 'item' && item.id !== 'total-facturation' ? (
                     <input
                       type="number"
                       value={item.resteAFaire}
                       onChange={(e) => handleInputChange(item.id, 'resteAFaire', e.target.value)}
                       className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    />
+                  ) : item.id === 'total-facturation' ? (
+                    <input
+                      type="number"
+                      value={item.resteAFaire}
+                      onChange={(e) => handleInputChange(item.id, 'resteAFaire', e.target.value)}
+                      className="w-24 px-2 py-1 text-right border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50"
                     />
                   ) : (
                     <span className={item.type === 'total' ? 'font-bold' : ''}>
